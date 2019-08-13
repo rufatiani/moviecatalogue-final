@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Movie Calatogue</string>
+
+    <string name="var_lang_english">Inggris</string>
+    <string name="var_lang_bahasa">Bahasa</string>
+
+    <string name="var_language">Bahasa</string>
+    <string name="var_vote">Rating</string>
+    <string name="var_year">Tanggal Rilis</string>
+    <string name="var_overview">Sinopsis</string>
+
+    <string name="var_item_search">Cari</string>
+    <string name="var_item_favorite">Favorit</string>
+
+    <string name="var_msg_title">Konfirmasi Hapus</string>
+    <string name="var_msg">Apakah Anda yakin ingin mengahpus data ini?</string>
+
+    <string name="msg_no_overview">Tidak ada sinopsis untuk bahasa ini.</string>
+    <string name="msg_fail_data">Gagal menampilkan data!</string>
+    <string name="msg_no_data">Tidak ada data yang ditampilkan!</string>
+    <string name="msg_favorite">Ditandai sebagai Favorit!</string>
+
+    <string name="lang_en">Inggris</string>
+    <string name="lang_ja">Jepang</string>
+    <string name="lang_fr">Perancis</string>
+    <string name="lang_es">Spanyol</string>
+
+    <string name="title_movie">Film</string>
+    <string name="title_tvshow">Serial TV</string>
+    <string name="title_favorite">Favorit</string>
+</resources>

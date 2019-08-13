@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Movie Calatogue</string>
+
+    <string name="var_lang_english">English</string>
+    <string name="var_lang_bahasa">Bahasa</string>
+
+    <string name="var_language">Language</string>
+    <string name="var_vote">Rating</string>
+    <string name="var_year">Release Date</string>
+    <string name="var_overview">Overview</string>
+
+    <string name="var_item_search">Search</string>
+    <string name="var_item_favorite">Favorite</string>
+
+    <string name="var_msg_title">Delete Confirmation</string>
+    <string name="var_msg">Are you sure want to delete this item?</string>
+
+    <string name="msg_no_overview">No overview for this language.</string>
+    <string name="msg_fail_data">Failed to load data!</string>
+    <string name="msg_no_data">Data is empty!</string>
+    <string name="msg_favorite">Mark as Favorite!</string>
+
+    <string name="lang_en">English</string>
+    <string name="lang_ja">Japanese</string>
+    <string name="lang_fr">French</string>
+    <string name="lang_es">Spanish</string>
+
+    <string name="title_movie">Movie</string>
+    <string name="title_tvshow">Tv Show</string>
+    <string name="title_favorite">Favorite</string>
+
+
+</resources>

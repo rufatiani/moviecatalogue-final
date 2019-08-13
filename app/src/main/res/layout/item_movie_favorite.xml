@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_margin="10dp"
+        android:background="@color/colorBackground">
+
+    <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="35dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/cvListFavDetail"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.0" app:cardElevation="10dp"
+            android:fadingEdgeLength="5dp" app:cardCornerRadius="5dp">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:padding="10dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TitleStyle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="150dp"
+                    app:layout_constraintTop_toTopOf="parent" android:id="@+id/tvListFavTitle"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    style="@style/LangStyle"
+                    app:layout_constraintTop_toBottomOf="@+id/tvListFavTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="5dp" android:id="@+id/tvListFavLang" android:textSize="12sp"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tvListFavLang"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="10dp" android:id="@+id/tvListFavDesc"
+                    android:maxLines="3"
+                    android:ellipsize="end"/>
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:id="@+id/cvListFavImage" app:cardElevation="10dp"
+                                        android:fadingEdgeLength="5dp"
+                                        app:cardBackgroundColor="@android:color/transparent">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minWidth="150dp">
+
+            <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_launcher_background"
+                    android:id="@+id/ivListFavPict"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvListFavRate"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/shape_rate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivListFavPict"
+                    android:padding="10dp"/>
+            <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" app:srcCompat="@drawable/ic_delete_red_24dp"
+                    android:id="@+id/ivListFavDelete" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="170dp" app:layout_constraintBottom_toBottomOf="@+id/ivListFavPict"
+                    app:layout_constraintEnd_toEndOf="@+id/ivListFavPict" android:layout_marginEnd="110dp"/>
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>

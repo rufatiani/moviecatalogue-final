@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/favorite"
+          android:title="@string/var_item_favorite"
+          android:icon="@drawable/ic_favorite_red_24dp"
+          app:showAsAction="ifRoom"/>
+
+    <group android:menuCategory="container">
+        <item
+                android:id="@+id/set_lang_english"
+                android:title="@string/var_lang_english"
+                app:showAsAction="never"/>
+
+        <item
+                android:id="@+id/set_lang_bahasa"
+                android:title="@string/var_lang_bahasa"
+                app:showAsAction="never"/>
+    </group>
+</menu>
