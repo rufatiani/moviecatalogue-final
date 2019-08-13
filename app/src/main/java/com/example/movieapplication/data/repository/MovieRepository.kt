@@ -21,8 +21,18 @@ class MovieRepository
         return movieApiInterface.getMovies(Const.KEY_API, LanguageManager.getLanguage(context))
     }
 
+    fun findMovies(query : String): Observable<PageMovie> {
+        return movieApiInterface.findMovies(Const.KEY_API, LanguageManager.getLanguage(context), query)
+    }
+
     fun getMoviesFav(): Observable<List<Movie>> {
         return movieDao.queryMovies()
+            .toObservable()
+            .doOnNext {}
+    }
+
+    fun findMoviesFav(title : String): Observable<List<Movie>> {
+        return movieDao.findMovies("%"+title+"%")
             .toObservable()
             .doOnNext {}
     }

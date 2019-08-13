@@ -1,5 +1,6 @@
 package com.example.movieapplication.view.fragment
 
+import android.app.SearchManager
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -8,9 +9,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.view.*
 import android.widget.Toast
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.TvShowAdapter
@@ -37,7 +37,36 @@ class TVShowFragment : Fragment() {
         AndroidSupportInjection.inject(this)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val searchManager : SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchManager != null){
+            val searchView : SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null && newText.isEmpty()){
+                        pbMovie.visibility = View.VISIBLE
+                        tvShowViewModel.loadTVs()
+                        tvShowViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        pbMovie.visibility = View.VISIBLE
+                        tvShowViewModel.searchTVs(query)
+                        tvShowViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
+                    }
+                    return true
+                }
+            })
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
@@ -48,7 +77,7 @@ class TVShowFragment : Fragment() {
 
         pbMovie.visibility = View.VISIBLE
         tvShowViewModel = ViewModelProviders.of(this, tvShowViewModelFactory).get(TvShowViewModel::class.java)
-        tvShowViewModel.tvsResult().observe(this, tvs)
+        tvShowViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
 
         if (tvShowViewModel.isError()) {
             pbMovie.visibility = View.GONE

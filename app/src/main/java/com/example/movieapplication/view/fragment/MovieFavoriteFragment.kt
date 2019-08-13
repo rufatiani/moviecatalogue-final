@@ -1,6 +1,7 @@
 package com.example.movieapplication.view.fragment
 
 import android.app.AlertDialog
+import android.app.SearchManager
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -9,9 +10,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.view.*
 import android.widget.Toast
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.MovieFavoriteAdapter
@@ -39,7 +39,36 @@ class MovieFavoriteFragment : Fragment() {
         AndroidSupportInjection.inject(this)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val searchManager : SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchManager != null){
+            val searchView : SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null && newText.isEmpty()){
+                        pbMovieFavorite.visibility = View.VISIBLE
+                        movieViewFavoriteModel.loadMovies()
+                        movieViewFavoriteModel.moviesResult().observe(viewLifecycleOwner, movies)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        pbMovieFavorite.visibility = View.VISIBLE
+                        movieViewFavoriteModel.searchMovies(query)
+                        movieViewFavoriteModel.moviesResult().observe(viewLifecycleOwner, movies)
+                    }
+                    return true
+                }
+            })
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        //setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_movie_favorite, container, false)
     }
 
@@ -56,7 +85,7 @@ class MovieFavoriteFragment : Fragment() {
         movieViewFavoriteModel =
             ViewModelProviders.of(this, movieFavoriteViewModelFactory).get(MovieFavoriteViewModel::class.java)
 
-        movieViewFavoriteModel.moviesResult().observe(this, movies)
+        movieViewFavoriteModel.moviesResult().observe(viewLifecycleOwner, movies)
 
         if (movieViewFavoriteModel.isError()) {
             pbMovieFavorite.visibility = View.GONE
@@ -65,14 +94,14 @@ class MovieFavoriteFragment : Fragment() {
 
         builder.setOnDismissListener {
             movieViewFavoriteModel.loadMovies()
-            movieViewFavoriteModel.moviesResult().observe(this, movies)
+            movieViewFavoriteModel.moviesResult().observe(viewLifecycleOwner, movies)
         }
     }
 
     override fun onResume() {
         super.onResume()
         movieViewFavoriteModel.loadMovies()
-        movieViewFavoriteModel.moviesResult().observe(this, movies)
+        movieViewFavoriteModel.moviesResult().observe(viewLifecycleOwner, movies)
     }
 
     private val movies = Observer<HashMap<String, Any>> { map ->

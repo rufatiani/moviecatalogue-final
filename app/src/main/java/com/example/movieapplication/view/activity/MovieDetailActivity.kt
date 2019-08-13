@@ -140,6 +140,12 @@ class MovieDetailActivity : AppCompatActivity() {
         if (menuItemFavorite != null) {
             menuItemFavorite.isVisible = !isFavorite
         }
+
+        val menuItemSearch : MenuItem? = menu?.findItem(R.id.search)
+        if (menuItemSearch != null){
+            menuItemSearch.isVisible = false
+        }
+
         return super.onPrepareOptionsMenu(menu)
     }
 

@@ -1,17 +1,19 @@
 package com.example.movieapplication.view.fragment
 
 import android.app.AlertDialog
+import android.app.SearchManager
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.text.TextUtils
+import android.view.*
 import android.widget.Toast
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.TvShowFavoriteAdapter
@@ -39,7 +41,36 @@ class TvShowFavoriteFragment : Fragment() {
         AndroidSupportInjection.inject(this)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val searchManager : SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchManager != null){
+            val searchView : SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null && newText.isEmpty()){
+                        pbMovieFavorite.visibility = View.VISIBLE
+                        tvShowFavoriteViewModel.loadTvs()
+                        tvShowFavoriteViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        pbMovieFavorite.visibility = View.VISIBLE
+                        tvShowFavoriteViewModel.searchTvs(query)
+                        tvShowFavoriteViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
+                    }
+                    return false
+                }
+            })
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        //setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_movie_favorite, container, false)
     }
 
@@ -56,7 +87,7 @@ class TvShowFavoriteFragment : Fragment() {
         tvShowFavoriteViewModel =
             ViewModelProviders.of(this, tvShowFavoriteViewModelFactory).get(TvShowFavoriteViewModel::class.java)
 
-        tvShowFavoriteViewModel.tvsResult().observe(this, tvs)
+        tvShowFavoriteViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
 
         if (tvShowFavoriteViewModel.isError()) {
             pbMovieFavorite.visibility = View.GONE
@@ -65,14 +96,14 @@ class TvShowFavoriteFragment : Fragment() {
 
         builder.setOnDismissListener {
             tvShowFavoriteViewModel.loadTvs()
-            tvShowFavoriteViewModel.tvsResult().observe(this, tvs)
+            tvShowFavoriteViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
         }
     }
 
     override fun onResume() {
         super.onResume()
         tvShowFavoriteViewModel.loadTvs()
-        tvShowFavoriteViewModel.tvsResult().observe(this, tvs)
+        tvShowFavoriteViewModel.tvsResult().observe(viewLifecycleOwner, tvs)
     }
 
     private val tvs = Observer<HashMap<String, Any>> { map ->

@@ -10,6 +10,9 @@ interface TvShowDao {
     @Query("SELECT * FROM tv_shows")
     fun queryTvShows(): Single<List<TvShow>>
 
+    @Query("SELECT * FROM tv_shows WHERE name like :name")
+    fun findTvShows(name : String): Single<List<TvShow>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTvShow(tvShow: TvShow): Long
 

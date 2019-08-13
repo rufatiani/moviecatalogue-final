@@ -56,6 +56,32 @@ class TvShowFavoriteViewModel
             .subscribe(disposableObserver)
     }
 
+    fun searchTvs(name : String) {
+        val disposableObserver = object : DisposableObserver<List<TvShow>>() {
+            override fun onComplete() {
+                error = false
+            }
+
+            override fun onNext(list: List<TvShow>) {
+                val map = HashMap<String, Any>()
+                map[Const.PARCEL_KEY_TV] = list
+                map[Const.PARCEL_KEY_BITMAP] = setBitmap(list)
+
+                tvs.postValue(map)
+            }
+
+            override fun onError(e: Throwable) {
+                error = true
+            }
+        }
+
+        tvShowRepository.findTvsFav(name)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .subscribe(disposableObserver)
+    }
+
     fun savetvShow(tvShow: TvShow) {
         tvShowRepository.saveTvShow(tvShow)
     }

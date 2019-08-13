@@ -21,8 +21,18 @@ class TvShowRepository
         return tvShowApiInterface.getTvs(Const.KEY_API, LanguageManager.getLanguage(context))
     }
 
+    fun findTvs(query : String): Observable<PageTvShow> {
+        return tvShowApiInterface.findTvs(Const.KEY_API, LanguageManager.getLanguage(context), query)
+    }
+
     fun getTvsFav(): Observable<List<TvShow>> {
         return tvShowDao.queryTvShows()
+            .toObservable()
+            .doOnNext {}
+    }
+
+    fun findTvsFav(name : String): Observable<List<TvShow>> {
+        return tvShowDao.findTvShows("%"+name+"%")
             .toObservable()
             .doOnNext {}
     }

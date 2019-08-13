@@ -9,6 +9,7 @@ class Const {
         const val URL_LANGUAGE_KEY_EN = "en-US"
         const val URL_LANGUAGE_KEY_ID = "id-ID"
 
+        const val QUERY = "query"
         const val QUERY_API_KEY = "api_key"
         const val QUERY_LANGUAGE = "language"
 

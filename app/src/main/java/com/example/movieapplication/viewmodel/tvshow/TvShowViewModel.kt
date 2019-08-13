@@ -33,7 +33,7 @@ class TvShowViewModel
         return tvMap
     }
 
-    private fun loadTVs() {
+    fun loadTVs() {
         val disposableObserver = object : DisposableObserver<PageTvShow>() {
             override fun onComplete() {
                 error = false
@@ -55,6 +55,34 @@ class TvShowViewModel
         }
 
         tvShowRepository.getTvs()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .subscribe(disposableObserver)
+    }
+
+    fun searchTVs(query : String) {
+        val disposableObserver = object : DisposableObserver<PageTvShow>() {
+            override fun onComplete() {
+                error = false
+            }
+
+            override fun onNext(pageTvShow: PageTvShow) {
+                val list: List<TvShow> = pageTvShow.results
+
+                val map = HashMap<String, Any>()
+                map[Const.PARCEL_KEY_TV] = list
+                map[Const.PARCEL_KEY_BITMAP] = setBitmap(list)
+
+                tvMap.postValue(map)
+            }
+
+            override fun onError(e: Throwable) {
+                error = true
+            }
+        }
+
+        tvShowRepository.findTvs(query)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(400, TimeUnit.MILLISECONDS)

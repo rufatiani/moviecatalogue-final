@@ -56,6 +56,32 @@ class MovieFavoriteViewModel
             .subscribe(disposableObserver)
     }
 
+    fun searchMovies(title : String) {
+        val disposableObserver = object : DisposableObserver<List<Movie>>() {
+            override fun onComplete() {
+                error = false
+            }
+
+            override fun onNext(list: List<Movie>) {
+                val map = HashMap<String, Any>()
+                map[Const.PARCEL_KEY_MOVIE] = list
+                map[Const.PARCEL_KEY_BITMAP] = setBitmap(list)
+
+                movies.postValue(map)
+            }
+
+            override fun onError(e: Throwable) {
+                error = true
+            }
+        }
+
+        movieRepository.findMoviesFav(title)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .subscribe(disposableObserver)
+    }
+
     fun saveMovie(movie: Movie) {
         movieRepository.saveMovie(movie)
     }

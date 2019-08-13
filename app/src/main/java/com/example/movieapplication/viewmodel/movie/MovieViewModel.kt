@@ -32,7 +32,7 @@ class MovieViewModel
         return error
     }
 
-    private fun loadMovies() {
+    fun loadMovies() {
         val disposableObserver = object : DisposableObserver<PageMovie>() {
             override fun onComplete() {
                 error = false
@@ -54,6 +54,34 @@ class MovieViewModel
         }
 
         movieRepository.getMovies()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .subscribe(disposableObserver)
+    }
+
+    fun searchMovies(query : String) {
+        val disposableObserver = object : DisposableObserver<PageMovie>() {
+            override fun onComplete() {
+                error = false
+            }
+
+            override fun onNext(pageMovie: PageMovie) {
+                val list: List<Movie> = pageMovie.results
+
+                val map = HashMap<String, Any>()
+                map[Const.PARCEL_KEY_MOVIE] = list
+                map[Const.PARCEL_KEY_BITMAP] = setBitmap(list)
+
+                movieMap.postValue(map)
+            }
+
+            override fun onError(e: Throwable) {
+                error = true
+            }
+        }
+
+        movieRepository.findMovies(query)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(400, TimeUnit.MILLISECONDS)

@@ -1,5 +1,6 @@
 package com.example.movieapplication.view.activity
 
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +8,11 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
 import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.PagerBottomNavigationAdapter
 import com.example.movieapplication.utils.Const
@@ -95,6 +98,11 @@ class HomeActivity : AppCompatActivity() {
         val menuItemFavorite: MenuItem? = menu?.findItem(R.id.favorite)
         if (menuItemFavorite != null) {
             menuItemFavorite.isVisible = false
+        }
+
+        val menuItemSearch : MenuItem? = menu?.findItem(R.id.search)
+        if (menuItemSearch != null){
+            menuItemSearch.isVisible = true
         }
 
         return super.onPrepareOptionsMenu(menu)
