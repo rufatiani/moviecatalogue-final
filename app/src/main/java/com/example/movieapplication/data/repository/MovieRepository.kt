@@ -45,15 +45,13 @@ class MovieRepository
         DeleteMovieAsyncTask(movieDao).execute(movie)
     }
 
-    private class InsertMovieAsyncTask(movieDao: MovieDao) : AsyncTask<Movie, Unit, Long>() {
-        val movieDao = movieDao
+    private class InsertMovieAsyncTask(val movieDao: MovieDao) : AsyncTask<Movie, Unit, Long>() {
         override fun doInBackground(vararg p0: Movie?): Long? {
             return movieDao.insertMovie(p0[0]!!)
         }
     }
 
-    private class DeleteMovieAsyncTask(movieDao: MovieDao) : AsyncTask<Movie, Unit, Unit>() {
-        val movieDao = movieDao
+    private class DeleteMovieAsyncTask(val movieDao: MovieDao) : AsyncTask<Movie, Unit, Unit>() {
         override fun doInBackground(vararg p0: Movie?): Unit? {
             return movieDao.deleteMovie(p0[0]!!)
         }

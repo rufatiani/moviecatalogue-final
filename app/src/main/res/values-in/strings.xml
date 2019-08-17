@@ -29,4 +29,7 @@
     <string name="title_movie">Film</string>
     <string name="title_tvshow">Serial TV</string>
     <string name="title_favorite">Favorit</string>
+
+    <string name="widget_text">Film Favorit</string>
+    <string name="widget_empty">Tidak ada data yang ditampilkan</string>
 </resources>

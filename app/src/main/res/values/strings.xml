@@ -31,4 +31,8 @@
     <string name="title_favorite">Favorite</string>
 
 
+    <string name="widget_text">Favorite Movies</string>
+    <string name="widget_empty">No Data Displayed</string>
+
+
 </resources>
