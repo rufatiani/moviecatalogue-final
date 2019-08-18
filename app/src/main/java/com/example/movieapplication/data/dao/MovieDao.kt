@@ -10,6 +10,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies")
     fun queryMovies(): Single<List<Movie>>
 
+    @Query("SELECT * FROM movies")
+    fun queryMoviesSync(): List<Movie>
+
     @Query("SELECT * FROM movies WHERE title LIKE :title")
     fun findMovies(title : String): Single<List<Movie>>
 

@@ -1,4 +1,4 @@
-package com.example.movieapplication.view
+package com.example.movieapplication.view.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -8,7 +8,6 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.RemoteViews
 import android.widget.Toast
-import com.example.movieapplication.FavoriteWidgetService
 import com.example.movieapplication.R
 
 /**
@@ -19,7 +18,11 @@ class FavoriteWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+            updateAppWidget(
+                context,
+                appWidgetManager,
+                appWidgetId
+            )
         }
     }
 
@@ -59,7 +62,7 @@ class FavoriteWidget : AppWidgetProvider() {
             views.setEmptyView(R.id.svWidget, R.id.tvWidgetEmpty)
 
             val toastIntent = Intent(context, FavoriteWidget::class.java)
-            toastIntent.action = FavoriteWidget.TOAST_ACTION
+            toastIntent.action = TOAST_ACTION
             toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
 

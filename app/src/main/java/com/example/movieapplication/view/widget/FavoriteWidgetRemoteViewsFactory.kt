@@ -1,22 +1,36 @@
-package com.example.movieapplication
+package com.example.movieapplication.view.widget
 
+import android.annotation.SuppressLint
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.os.Binder
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import com.example.movieapplication.R
 import com.example.movieapplication.data.dao.MovieDao
+import com.example.movieapplication.data.dao.MovieDatabase
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.data.repository.MovieRepository
-import com.example.movieapplication.view.FavoriteWidget
+import com.example.movieapplication.data.task.DownloadImageTask
+import com.example.movieapplication.utils.Const
+import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class FavoriteWidgetRemoteViewsFactory(val context: Context) : RemoteViewsService.RemoteViewsFactory{
+class FavoriteWidgetRemoteViewsFactory(val context: Context, val movieRepository: MovieRepository) : RemoteViewsService.RemoteViewsFactory{
 
     private var items : MutableList<Bitmap> = ArrayList()
-    override fun onCreate() {
+    private var movies : List<Movie> = ArrayList()
 
+    override fun onCreate() {
     }
 
     override fun getLoadingView(): RemoteViews? {
@@ -28,9 +42,8 @@ class FavoriteWidgetRemoteViewsFactory(val context: Context) : RemoteViewsServic
     }
 
     override fun onDataSetChanged() {
-        items.add(BitmapFactory.decodeResource(context.resources, R.drawable.example_appwidget_preview))
-        items.add(BitmapFactory.decodeResource(context.resources, R.drawable.example_appwidget_preview))
-        items.add(BitmapFactory.decodeResource(context.resources, R.drawable.example_appwidget_preview))
+        movies = movieRepository.getMoviesFavSync()
+        setBitmap(movies)
     }
 
     override fun hasStableIds(): Boolean {
@@ -63,7 +76,9 @@ class FavoriteWidgetRemoteViewsFactory(val context: Context) : RemoteViewsServic
 
     }
 
-    private fun getBitmap(){
-
+    private fun setBitmap(list: List<Movie>){
+        for (i in 0 until list.size) {
+            items.add(DownloadImageTask().execute(Const.URL_IMAGE + Const.URL_IMAGE_SIZE + list[i].image).get())
+        }
     }
 }

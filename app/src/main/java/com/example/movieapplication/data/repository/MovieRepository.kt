@@ -31,6 +31,10 @@ class MovieRepository
             .doOnNext {}
     }
 
+    fun getMoviesFavSync(): List<Movie> {
+        return movieDao.queryMoviesSync()
+    }
+
     fun findMoviesFav(title : String): Observable<List<Movie>> {
         return movieDao.findMovies("%"+title+"%")
             .toObservable()
