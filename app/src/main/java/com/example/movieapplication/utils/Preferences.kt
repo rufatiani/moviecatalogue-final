@@ -6,18 +6,12 @@ import android.preference.PreferenceManager
 import com.example.movieapplication.R
 import java.util.*
 
-class LanguageManager {
+class Preferences {
 
     companion object {
         @JvmStatic
         fun setLocale(context: Context): Context {
             return updateResource(context, getLanguagePref(context))
-        }
-
-        @JvmStatic
-        fun setNewLocale(context: Context, language: String): Context {
-            setLanguagePref(context, language)
-            return updateResource(context, language)
         }
 
         @JvmStatic
@@ -67,6 +61,38 @@ class LanguageManager {
                 Const.LANGUAGE_KEY_ID -> return Const.URL_LANGUAGE_KEY_ID
             }
             return code
+        }
+
+        @JvmStatic
+        fun getDailyPref(context: Context): Boolean {
+            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val temp: Boolean? = sharedPreferences.getBoolean(Const.DAILY_REMINDER_KEY, false)
+            if (temp != null) {
+                return temp
+            }
+            return false
+        }
+
+        @JvmStatic
+        fun setDailyPref(context: Context, reminder: Boolean) {
+            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            sharedPreferences.edit().putBoolean(Const.DAILY_REMINDER_KEY, reminder).apply()
+        }
+
+        @JvmStatic
+        fun getReleasedPref(context: Context): Boolean {
+            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val temp: Boolean? = sharedPreferences.getBoolean(Const.RELEASED_REMINDER_KEY, false)
+            if (temp != null) {
+                return temp
+            }
+            return false
+        }
+
+        @JvmStatic
+        fun setReleasedPref(context: Context, reminder: Boolean) {
+            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            sharedPreferences.edit().putBoolean(Const.RELEASED_REMINDER_KEY, reminder).apply()
         }
     }
 }

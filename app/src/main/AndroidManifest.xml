@@ -3,6 +3,7 @@
           package="com.example.movieapplication">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
             android:name=".MainApplication"
@@ -12,6 +13,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".view.activity.ReminderActivity">
+        </activity>
+
+        <receiver
+                android:name=".data.service.DailyAlarmReceiver"
+                android:enabled="true"
+                android:exported="true" />
+
         <receiver android:name=".view.widget.FavoriteWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -21,9 +30,10 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/favorite_widget_info"/>
         </receiver>
+
         <service
                 android:name=".view.widget.FavoriteWidgetService"
-                android:permission="android.permission.BIND_REMOTEVIEWS" />
+                android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <activity android:name=".view.activity.MovieDetailActivity">
         </activity>

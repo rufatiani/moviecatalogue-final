@@ -7,7 +7,7 @@ import com.example.movieapplication.data.dao.TvShowDao
 import com.example.movieapplication.data.model.PageTvShow
 import com.example.movieapplication.data.model.TvShow
 import com.example.movieapplication.utils.Const
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -18,11 +18,11 @@ class TvShowRepository
     private val context: Context
 ) {
     fun getTvs(): Observable<PageTvShow> {
-        return tvShowApiInterface.getTvs(Const.KEY_API, LanguageManager.getLanguage(context))
+        return tvShowApiInterface.getTvs(Const.KEY_API, Preferences.getLanguage(context))
     }
 
     fun findTvs(query : String): Observable<PageTvShow> {
-        return tvShowApiInterface.findTvs(Const.KEY_API, LanguageManager.getLanguage(context), query)
+        return tvShowApiInterface.findTvs(Const.KEY_API, Preferences.getLanguage(context), query)
     }
 
     fun getTvsFav(): Observable<List<TvShow>> {

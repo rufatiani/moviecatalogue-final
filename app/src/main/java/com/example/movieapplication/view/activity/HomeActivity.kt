@@ -1,35 +1,41 @@
 package com.example.movieapplication.view.activity
 
-import android.app.SearchManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
+import android.support.v4.app.NotificationCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
-import android.util.SparseArray
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.PagerBottomNavigationAdapter
+import com.example.movieapplication.data.service.DailyAlarmReceiver
 import com.example.movieapplication.utils.Const
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
     private var prevMenuItem: MenuItem? = null
-    private var savedStateFragment = SparseArray<Fragment.SavedState>()
-    private var currentItemId = R.id.navigation_movie
+    private lateinit var dailyAlarmReceiver : DailyAlarmReceiver
+    private lateinit var builder : NotificationCompat.Builder
+    private var notificationManager: NotificationManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_home)
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        prepareBroadcast()
 
         val fragmentAdapter = supportFragmentManager?.let { PagerBottomNavigationAdapter(baseContext, it) }
         vpHome.adapter = fragmentAdapter
@@ -76,7 +82,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(newBase?.let { LanguageManager.setLocale(it) })
+        super.attachBaseContext(newBase?.let { Preferences.setLocale(it) })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -89,6 +95,9 @@ class HomeActivity : AppCompatActivity() {
             settingLanguage(Const.LANGUAGE_KEY_EN)
         } else if (item?.itemId == R.id.set_lang_bahasa) {
             settingLanguage(Const.LANGUAGE_KEY_ID)
+        } else if (item?.itemId == R.id.setting){
+            val intent = Intent(this, ReminderActivity::class.java)
+            startActivity(intent)
         }
 
         return super.onOptionsItemSelected(item)
@@ -109,10 +118,24 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun settingLanguage(language: String) {
-        LanguageManager.setLanguagePref(this, language)
-        LanguageManager.setLocale(this)
+        Preferences.setLanguagePref(this, language)
+        Preferences.setLocale(this)
         intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun prepareBroadcast(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            dailyAlarmReceiver = DailyAlarmReceiver()
+
+            if (Preferences.getDailyPref(this)) {
+                dailyAlarmReceiver.setDailyReminder(this)
+            }
+
+            if (Preferences.getReleasedPref(this)) {
+                dailyAlarmReceiver.setReleasedReminder(this)
+            }
+        }
     }
 }

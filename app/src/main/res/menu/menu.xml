@@ -15,6 +15,10 @@
 
     <group android:menuCategory="container">
         <item
+                android:id="@+id/setting"
+                android:title="@string/var_setting"
+                app:showAsAction="never"/>
+        <item
                 android:id="@+id/set_lang_english"
                 android:title="@string/var_lang_english"
                 app:showAsAction="never"/>

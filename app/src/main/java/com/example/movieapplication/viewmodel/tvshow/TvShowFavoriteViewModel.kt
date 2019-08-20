@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.graphics.Bitmap
 import com.example.movieapplication.data.model.TvShow
 import com.example.movieapplication.data.repository.TvShowRepository
-import com.example.movieapplication.data.task.DownloadImageTask
+import com.example.movieapplication.data.service.task.DownloadImageTask
 import com.example.movieapplication.utils.Const
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver

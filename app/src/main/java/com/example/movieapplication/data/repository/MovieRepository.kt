@@ -7,7 +7,7 @@ import com.example.movieapplication.data.dao.MovieDao
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.data.model.PageMovie
 import com.example.movieapplication.utils.Const
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -18,11 +18,11 @@ class MovieRepository
     private val context: Context
 ) {
     fun getMovies(): Observable<PageMovie> {
-        return movieApiInterface.getMovies(Const.KEY_API, LanguageManager.getLanguage(context))
+        return movieApiInterface.getMovies(Const.KEY_API, Preferences.getLanguage(context))
     }
 
     fun findMovies(query : String): Observable<PageMovie> {
-        return movieApiInterface.findMovies(Const.KEY_API, LanguageManager.getLanguage(context), query)
+        return movieApiInterface.findMovies(Const.KEY_API, Preferences.getLanguage(context), query)
     }
 
     fun getMoviesFav(): Observable<List<Movie>> {

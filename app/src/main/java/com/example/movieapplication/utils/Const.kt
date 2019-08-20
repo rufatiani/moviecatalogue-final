@@ -17,6 +17,8 @@ class Const {
         const val PARCEL_KEY_TV = "tv"
         const val PARCEL_KEY_BITMAP = "bitmap"
         const val PARCEL_KEY_FAVORITE = "is_favorite"
+        const val PARCEL_KEY_TITLE = "title"
+        const val PARCEL_KEY_MESSAGE = "message"
 
         const val LANGUAGE_KEY = "language"
         const val LANGUAGE_KEY_EN = "en"
@@ -24,5 +26,15 @@ class Const {
         const val LANGUAGE_KEY_FR = "fr"
         const val LANGUAGE_KEY_JA = "ja"
         const val LANGUAGE_KEY_ES = "es"
+
+        const val CHANNEL_ID = "01"
+        const val CHANNEL_NAME = "movie channel"
+        const val NOTIFICATION_ID = 1;
+
+        const val DAILY_REMINDER_KEY = "DAILY_REMINDER"
+        const val RELEASED_REMINDER_KEY = "RELEASE_REMINDER"
+        const val ID_DAILY_REMINDER = 90
+        const val ID_RELEASED_REMINDEER = 91
+
     }
 }

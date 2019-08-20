@@ -9,7 +9,7 @@ import com.example.movieapplication.di.component.DaggerAppComponent
 import com.example.movieapplication.di.module.AppModule
 import com.example.movieapplication.di.module.NetModule
 import com.example.movieapplication.di.module.StorageModule
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -40,7 +40,7 @@ class MainApplication : Application(), HasActivityInjector, HasSupportFragmentIn
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
         super.onConfigurationChanged(newConfig)
-        LanguageManager.setLocale(applicationContext)
+        Preferences.setLocale(applicationContext)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector

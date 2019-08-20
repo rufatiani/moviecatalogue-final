@@ -1,4 +1,4 @@
-package com.example.movieapplication.data.task
+package com.example.movieapplication.data.service.task
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

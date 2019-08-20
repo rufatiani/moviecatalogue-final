@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.example.movieapplication.R
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.utils.Const
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import com.example.movieapplication.view.activity.MovieDetailActivity
 import com.example.movieapplication.viewmodel.movie.MovieFavoriteViewModel
 
@@ -36,7 +36,7 @@ class MovieFavoriteAdapter(
 
     override fun onBindViewHolder(holder: MovieFavoriteViewHolder, position: Int) {
         holder.tvTitle.text = movies[position].title
-        holder.tvLang.text = movies[position].language?.let { LanguageManager.getLanguage(holder.itemView.context, it) }
+        holder.tvLang.text = movies[position].language?.let { Preferences.getLanguage(holder.itemView.context, it) }
         holder.tvRate.text = movies[position].rating.toString()
         holder.tvDesc.text = movies[position].overview
         holder.ivIcon.setImageBitmap(bitmaps[position])

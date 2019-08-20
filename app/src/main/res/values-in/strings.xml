@@ -4,11 +4,17 @@
 
     <string name="var_lang_english">Inggris</string>
     <string name="var_lang_bahasa">Bahasa</string>
+    <string name="var_setting">Pengaturan</string>
 
     <string name="var_language">Bahasa</string>
     <string name="var_vote">Rating</string>
     <string name="var_year">Tanggal Rilis</string>
     <string name="var_overview">Sinopsis</string>
+
+    <string name="var_release_reminder">Pengingat Rilis</string>
+    <string name="var_release_reminder_detail">Pengingat untuk menunjukan film yang rilis hari ini.</string>
+    <string name="var_daily_reminder">Pengingat Harian</string>
+    <string name="var_daily_reminder_detail">Pengingat untuk kembali ke aplikasi.</string>
 
     <string name="var_item_search">Cari</string>
     <string name="var_item_favorite">Favorit</string>
@@ -21,6 +27,11 @@
     <string name="msg_no_data">Tidak ada data yang ditampilkan!</string>
     <string name="msg_favorite">Ditandai sebagai Favorit!</string>
 
+    <string name="msg_daily_reminder">Hai!</string>
+    <string name="msg_daily_reminder_content">Kami merindukanmu, ayo lihat film-film terbaru!</string>
+    <string name="msg_released_reminder">Kabar Baik!</string>
+    <string name="msg_released_reminder_content">dirilis hari ini.</string>
+
     <string name="lang_en">Inggris</string>
     <string name="lang_ja">Jepang</string>
     <string name="lang_fr">Perancis</string>
@@ -32,4 +43,9 @@
 
     <string name="widget_text">Film Favorit</string>
     <string name="widget_empty">Tidak ada data yang ditampilkan</string>
+
+    <string name="notification_title">Movie Catalogue</string>
+    <string name="notification_content_daily">Kami merindukanmu, mari lihat film-film menarik hari ini!</string>
+    <string name="notification_content_release">Beberapa film rilis hari ini, mari lihat!</string>
+
 </resources>

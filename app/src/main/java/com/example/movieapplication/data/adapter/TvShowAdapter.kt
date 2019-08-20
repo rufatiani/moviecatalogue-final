@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.example.movieapplication.R
 import com.example.movieapplication.data.model.TvShow
 import com.example.movieapplication.utils.Const
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import com.example.movieapplication.view.activity.MovieDetailActivity
 
 class TvShowAdapter(private var tvShows: List<TvShow>, private var bitmaps: List<Bitmap>) :
@@ -29,7 +29,7 @@ class TvShowAdapter(private var tvShows: List<TvShow>, private var bitmaps: List
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
         holder.tvTitle.text = tvShows[position].name
         holder.tvLang.text =
-            tvShows[position].language?.let { LanguageManager.getLanguage(holder.itemView.context, it) }
+            tvShows[position].language?.let { Preferences.getLanguage(holder.itemView.context, it) }
         holder.tvRate.text = tvShows[position].rating.toString()
         holder.tvDesc.text = tvShows[position].overview
         holder.ivIcon.setImageBitmap(bitmaps[position])

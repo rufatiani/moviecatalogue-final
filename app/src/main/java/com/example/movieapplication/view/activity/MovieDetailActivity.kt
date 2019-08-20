@@ -13,7 +13,7 @@ import com.example.movieapplication.R
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.data.model.TvShow
 import com.example.movieapplication.utils.Const
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import com.example.movieapplication.viewmodel.movie.MovieFavoriteViewModel
 import com.example.movieapplication.viewmodel.movie.MovieFavoriteViewModelFactory
 import com.example.movieapplication.viewmodel.tvshow.TvShowFavoriteViewModel
@@ -82,7 +82,7 @@ class MovieDetailActivity : AppCompatActivity() {
         pbDetail.visibility = View.VISIBLE
         if (movie != null) {
             tvDetailYear.text = movie?.releaseDate
-            tvDetailLanguage.text = movie?.language?.let { LanguageManager.getLanguage(applicationContext, it) }
+            tvDetailLanguage.text = movie?.language?.let { Preferences.getLanguage(applicationContext, it) }
             tvDetailRate.text = movie?.rating.toString()
 
             if (movie?.overview.isNullOrBlank()) {
@@ -92,7 +92,7 @@ class MovieDetailActivity : AppCompatActivity() {
             }
         } else {
             tvDetailYear.text = tv?.firstAirDate
-            tvDetailLanguage.text = tv?.language?.let { LanguageManager.getLanguage(applicationContext, it) }
+            tvDetailLanguage.text = tv?.language?.let { Preferences.getLanguage(applicationContext, it) }
             tvDetailRate.text = tv?.rating.toString()
 
             if (tv?.overview.isNullOrBlank()) {
@@ -150,8 +150,8 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun settingLanguage(language: String) {
-        LanguageManager.setLanguagePref(this, language)
-        LanguageManager.setLocale(this)
+        Preferences.setLanguagePref(this, language)
+        Preferences.setLocale(this)
         intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()

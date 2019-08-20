@@ -12,7 +12,7 @@ import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.MovieAdapter.MovieViewHolder
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.utils.Const
-import com.example.movieapplication.utils.LanguageManager
+import com.example.movieapplication.utils.Preferences
 import com.example.movieapplication.view.activity.MovieDetailActivity
 
 class MovieAdapter(private var movies: List<Movie>, private var bitmaps: List<Bitmap>) :
@@ -29,7 +29,7 @@ class MovieAdapter(private var movies: List<Movie>, private var bitmaps: List<Bi
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.tvTitle.text = movies[position].title
-        holder.tvLang.text = movies[position].language?.let { LanguageManager.getLanguage(holder.itemView.context, it) }
+        holder.tvLang.text = movies[position].language?.let { Preferences.getLanguage(holder.itemView.context, it) }
         holder.tvRate.text = movies[position].rating.toString()
         holder.tvDesc.text = movies[position].overview
         holder.ivIcon.setImageBitmap(bitmaps[position])
