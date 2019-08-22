@@ -1,5 +1,6 @@
 package com.example.movieapplication.data.service
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,31 +11,56 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Handler
+import android.support.annotation.CallSuper
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat.getSystemService
+import android.util.Log
 import android.widget.Toast
 import com.example.movieapplication.R
+import com.example.movieapplication.data.model.Movie
+import com.example.movieapplication.data.model.PageMovie
+import com.example.movieapplication.data.repository.MovieRepository
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.view.activity.HomeActivity
+import dagger.android.AndroidInjection
+import java.io.InputStream
+import java.net.URL
+import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
+import kotlin.collections.ArrayList
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class DailyAlarmReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var movieRepository: MovieRepository
 
     private var builder : NotificationCompat.Builder? = null
     private var notificationManager: NotificationManager? = null
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(context: Context, intent: Intent?) {
+        AndroidInjection.inject(this, context)
+
         val title = intent?.getStringExtra(Const.PARCEL_KEY_TITLE)
         val message = intent?.getStringExtra(Const.PARCEL_KEY_MESSAGE)
+        val type = intent?.getStringExtra(Const.PARCEL_KEY_TYPE)
 
-        showNofitication(context, title, message)
+        if (type.equals(Const.DAILY_REMINDER_KEY)){
+            showNofitication(context, title, message, Const.NOTIFICATION_ID)
+        }else{
+            val today = SimpleDateFormat(Const.FORMAT_DATE).format(Date())
+            val list = ReleasedMovieTask(movieRepository).execute(today).get().results
+            for (i in 1..list.size){
+                showNofitication(context, title, list[i-1].title + " " + message, Const.NOTIFICATION_ID + i)
+            }
+        }
     }
 
-    private fun showNofitication(context: Context?, title : String?, message : String?) {
+    private fun showNofitication(context: Context?, title : String?, message : String?, notifId : Int) {
         val intent = Intent(context, HomeActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
@@ -49,14 +75,15 @@ class DailyAlarmReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel(Const.CHANNEL_ID, Const.CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel =
+                NotificationChannel(Const.CHANNEL_ID, Const.CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
             builder?.setChannelId(Const.CHANNEL_ID)
             notificationManager?.createNotificationChannel(channel)
         }
 
         val notification = builder?.build()
-        notificationManager?.notify(Const.NOTIFICATION_ID, notification)
+        notificationManager?.notify(notifId, notification)
     }
 
     fun setDailyReminder(context: Context){
@@ -64,6 +91,7 @@ class DailyAlarmReceiver : BroadcastReceiver() {
         val intent = Intent(context, DailyAlarmReceiver::class.java)
         intent.putExtra(Const.PARCEL_KEY_TITLE, context.resources.getString(R.string.msg_daily_reminder))
         intent.putExtra(Const.PARCEL_KEY_MESSAGE, context.resources.getString(R.string.msg_daily_reminder_content))
+        intent.putExtra(Const.PARCEL_KEY_TYPE, Const.DAILY_REMINDER_KEY)
 
         val calendar : Calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 7)
@@ -81,6 +109,7 @@ class DailyAlarmReceiver : BroadcastReceiver() {
         val intent = Intent(context, DailyAlarmReceiver::class.java)
         intent.putExtra(Const.PARCEL_KEY_TITLE, context.resources.getString(R.string.msg_released_reminder))
         intent.putExtra(Const.PARCEL_KEY_MESSAGE, context.resources.getString(R.string.msg_released_reminder_content))
+        intent.putExtra(Const.PARCEL_KEY_TYPE, Const.RELEASED_REMINDER_KEY)
 
         val calendar : Calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 8)
@@ -104,4 +133,17 @@ class DailyAlarmReceiver : BroadcastReceiver() {
         }
     }
 
+    class ReleasedMovieTask(val movieRepository: MovieRepository) : AsyncTask<String, Void, PageMovie>() {
+        override fun doInBackground(vararg params: String?): PageMovie? {
+            var pageMovie : PageMovie? = null
+            params[0]?.let { it ->
+                movieRepository.movieRelease(it).subscribe({
+                pageMovie = it
+            },{
+                    Log.e("ERROR", it.message)
+            }) }
+
+            return pageMovie
+        }
+    }
 }

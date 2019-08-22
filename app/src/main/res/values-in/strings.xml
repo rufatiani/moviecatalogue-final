@@ -43,9 +43,4 @@
 
     <string name="widget_text">Film Favorit</string>
     <string name="widget_empty">Tidak ada data yang ditampilkan</string>
-
-    <string name="notification_title">Movie Catalogue</string>
-    <string name="notification_content_daily">Kami merindukanmu, mari lihat film-film menarik hari ini!</string>
-    <string name="notification_content_release">Beberapa film rilis hari ini, mari lihat!</string>
-
 </resources>

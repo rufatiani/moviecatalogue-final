@@ -7,9 +7,9 @@
 
     <ImageView
             android:id="@+id/ivItemWidget"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            tools:srcCompat="@drawable/example_appwidget_preview" />
+            tools:srcCompat="@drawable/example_appwidget_preview"/>
 </LinearLayout>

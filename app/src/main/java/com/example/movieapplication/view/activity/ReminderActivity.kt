@@ -4,10 +4,13 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.movieapplication.R
+import com.example.movieapplication.data.repository.MovieRepository
 import com.example.movieapplication.data.service.DailyAlarmReceiver
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.utils.Preferences
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_reminder.*
+import javax.inject.Inject
 
 class ReminderActivity : AppCompatActivity() {
 
@@ -15,6 +18,7 @@ class ReminderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_reminder)
 
         val actionBar = supportActionBar
@@ -39,7 +43,6 @@ class ReminderActivity : AppCompatActivity() {
 
             swReleaseReminder.setOnCheckedChangeListener{button, checked->
                 Preferences.setReleasedPref(this, checked)
-
                 if (checked){
                     dailyAlarmReceiver.setReleasedReminder(this)
                 }else{

@@ -17,10 +17,14 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.PagerBottomNavigationAdapter
+import com.example.movieapplication.data.repository.MovieRepository
 import com.example.movieapplication.data.service.DailyAlarmReceiver
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.utils.Preferences
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_reminder.*
+import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
 
@@ -128,12 +132,11 @@ class HomeActivity : AppCompatActivity() {
     private fun prepareBroadcast(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dailyAlarmReceiver = DailyAlarmReceiver()
-
-            if (Preferences.getDailyPref(this)) {
+            if(Preferences.getDailyPref(this)){
                 dailyAlarmReceiver.setDailyReminder(this)
             }
 
-            if (Preferences.getReleasedPref(this)) {
+            if(Preferences.getReleasedPref(this)){
                 dailyAlarmReceiver.setReleasedReminder(this)
             }
         }

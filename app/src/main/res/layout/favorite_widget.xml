@@ -14,20 +14,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
-                android:loopViews="true" />
+                android:loopViews="true" android:background="@drawable/shape_widget_background"/>
 
         <TextView
                 android:id="@+id/tvWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/shape_widget_text"
                 android:text="@string/widget_text"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" android:layout_marginTop="5dp"/>
     </LinearLayout>
 
     <TextView
@@ -35,12 +34,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/colorAccent"
+            android:background="@drawable/shape_text"
             android:text="@string/widget_empty"
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.example.movieapplication.viewmodel.movie
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.graphics.Bitmap
@@ -11,8 +12,12 @@ import com.example.movieapplication.utils.Const
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MovieViewModel
 @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
@@ -82,6 +87,37 @@ class MovieViewModel
         }
 
         movieRepository.findMovies(query)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .subscribe(disposableObserver)
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun releaseToday() {
+        val today = SimpleDateFormat(Const.FORMAT_DATE).format(Date())
+
+        val disposableObserver = object : DisposableObserver<PageMovie>() {
+            override fun onComplete() {
+                error = false
+            }
+
+            override fun onNext(pageMovie: PageMovie) {
+                val list: List<Movie> = pageMovie.results
+
+                val map = HashMap<String, Any>()
+                map[Const.PARCEL_KEY_MOVIE] = list
+                map[Const.PARCEL_KEY_BITMAP] = setBitmap(list)
+
+                movieMap.postValue(map)
+            }
+
+            override fun onError(e: Throwable) {
+                error = true
+            }
+        }
+
+        movieRepository.movieRelease(today)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(400, TimeUnit.MILLISECONDS)

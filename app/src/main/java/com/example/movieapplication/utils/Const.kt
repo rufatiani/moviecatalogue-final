@@ -2,8 +2,10 @@ package com.example.movieapplication.utils
 
 class Const {
     companion object {
-        const val KEY_API = "28cbd091f7318c9e1c8e5263a6a27323"
 
+        const val FORMAT_DATE = "yyyy-MM-dd"
+
+        const val KEY_API = "28cbd091f7318c9e1c8e5263a6a27323"
         const val URL_IMAGE = "https://image.tmdb.org/t/p/"
         const val URL_IMAGE_SIZE = "w154/"
         const val URL_LANGUAGE_KEY_EN = "en-US"
@@ -12,6 +14,8 @@ class Const {
         const val QUERY = "query"
         const val QUERY_API_KEY = "api_key"
         const val QUERY_LANGUAGE = "language"
+        const val QUERY_RELEASE_DATE_GTE = "primary_release_date.gte"
+        const val QUERY_RELEASE_DATE_LTE = "primary_release_date.lte"
 
         const val PARCEL_KEY_MOVIE = "movie"
         const val PARCEL_KEY_TV = "tv"
@@ -19,6 +23,7 @@ class Const {
         const val PARCEL_KEY_FAVORITE = "is_favorite"
         const val PARCEL_KEY_TITLE = "title"
         const val PARCEL_KEY_MESSAGE = "message"
+        const val PARCEL_KEY_TYPE = "type"
 
         const val LANGUAGE_KEY = "language"
         const val LANGUAGE_KEY_EN = "en"

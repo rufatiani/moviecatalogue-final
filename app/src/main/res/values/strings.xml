@@ -30,7 +30,7 @@
     <string name="msg_daily_reminder">Hello!</string>
     <string name="msg_daily_reminder_content">We miss you, come and see the new movies!</string>
     <string name="msg_released_reminder">Good News!</string>
-    <string name="msg_released_reminder_content">are released today.</string>
+    <string name="msg_released_reminder_content">been release today.</string>
 
     <string name="lang_en">English</string>
     <string name="lang_ja">Japanese</string>
@@ -41,13 +41,7 @@
     <string name="title_tvshow">Tv Show</string>
     <string name="title_favorite">Favorite</string>
 
-
     <string name="widget_text">Favorite Movies</string>
     <string name="widget_empty">No Data Displayed</string>
-
-    <string name="notification_title">Movie Catalogue</string>
-    <string name="notification_content_daily">We miss you, come and look the new movie!</string>
-    <string name="notification_content_release">Some move are release today, take a look!</string>
-
 
 </resources>

@@ -25,6 +25,10 @@ class MovieRepository
         return movieApiInterface.findMovies(Const.KEY_API, Preferences.getLanguage(context), query)
     }
 
+    fun movieRelease(today : String): Observable<PageMovie> {
+        return movieApiInterface.movieRelease(Const.KEY_API, Preferences.getLanguage(context), today, today)
+    }
+
     fun getMoviesFav(): Observable<List<Movie>> {
         return movieDao.queryMovies()
             .toObservable()
