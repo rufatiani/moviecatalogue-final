@@ -10,6 +10,7 @@ import android.app.job.JobService
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
 import android.os.Build
@@ -24,8 +25,10 @@ import com.example.movieapplication.R
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.data.model.PageMovie
 import com.example.movieapplication.data.repository.MovieRepository
+import com.example.movieapplication.data.service.task.DownloadImageTask
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.view.activity.HomeActivity
+import com.example.movieapplication.view.activity.MovieDetailActivity
 import dagger.android.AndroidInjection
 import java.io.InputStream
 import java.net.URL
@@ -41,28 +44,41 @@ class DailyAlarmReceiver : BroadcastReceiver() {
 
     private var builder : NotificationCompat.Builder? = null
     private var notificationManager: NotificationManager? = null
+    private var type : String? = Const.DAILY_REMINDER_KEY
+    private var list : List<Movie> = ArrayList()
 
     override fun onReceive(context: Context, intent: Intent?) {
         AndroidInjection.inject(this, context)
 
         val title = intent?.getStringExtra(Const.PARCEL_KEY_TITLE)
         val message = intent?.getStringExtra(Const.PARCEL_KEY_MESSAGE)
-        val type = intent?.getStringExtra(Const.PARCEL_KEY_TYPE)
+        type = intent?.getStringExtra(Const.PARCEL_KEY_TYPE)
 
         if (type.equals(Const.DAILY_REMINDER_KEY)){
             showNofitication(context, title, message, Const.NOTIFICATION_ID)
         }else{
             val today = SimpleDateFormat(Const.FORMAT_DATE).format(Date())
-            val list = ReleasedMovieTask(movieRepository).execute(today).get().results
+            list = ReleasedMovieTask(movieRepository).execute(today).get().results
             for (i in 1..list.size){
-                showNofitication(context, title, list[i-1].title + " " + message, Const.NOTIFICATION_ID + i)
+                showNofitication(context, title, list[i-1].title + " " + message, i)
             }
         }
     }
 
     private fun showNofitication(context: Context?, title : String?, message : String?, notifId : Int) {
-        val intent = Intent(context, HomeActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        var intent = Intent(context, HomeActivity::class.java)
+        if(type.equals(Const.RELEASED_REMINDER_KEY)){
+            val i = notifId-1
+
+            intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra(Const.PARCEL_KEY_FAVORITE, false)
+            intent.putExtra(Const.PARCEL_KEY_MOVIE, list[i])
+
+            val bitmap : Bitmap? = DownloadImageTask().execute(Const.URL_IMAGE + Const.URL_IMAGE_SIZE + list[i].image).get()
+            intent.putExtra(Const.PARCEL_KEY_BITMAP, bitmap)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(context, notifId, intent, 0)
 
         notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         builder = context?.let {

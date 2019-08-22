@@ -34,7 +34,7 @@ class Const {
 
         const val CHANNEL_ID = "01"
         const val CHANNEL_NAME = "movie channel"
-        const val NOTIFICATION_ID = 1;
+        const val NOTIFICATION_ID = 0;
 
         const val DAILY_REMINDER_KEY = "DAILY_REMINDER"
         const val RELEASED_REMINDER_KEY = "RELEASE_REMINDER"
