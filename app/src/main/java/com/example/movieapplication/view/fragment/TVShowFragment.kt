@@ -85,19 +85,6 @@ class TVShowFragment : Fragment() {
         }
     }
 
-    private val error = Observer<Boolean> { error ->
-        if (error != null) {
-            if (error) {
-                pbMovie.visibility = View.GONE
-                Toast.makeText(context, context?.resources?.getString(R.string.msg_fail_data), Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-
-        pbMovie.visibility = View.GONE
-        Toast.makeText(context, context?.resources?.getString(R.string.msg_fail_data), Toast.LENGTH_SHORT).show()
-    }
-
     private val tvs = Observer<HashMap<String, Any>> { map ->
         if (map != null) {
             val list: List<TvShow> = map[Const.PARCEL_KEY_TV] as List<TvShow>
