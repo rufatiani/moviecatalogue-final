@@ -61,7 +61,7 @@ class TvShowViewModel
             .subscribe(disposableObserver)
     }
 
-    fun searchTVs(query : String) {
+    fun searchTVs(query: String) {
         val disposableObserver = object : DisposableObserver<PageTvShow>() {
             override fun onComplete() {
                 error = false

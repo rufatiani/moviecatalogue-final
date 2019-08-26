@@ -6,7 +6,7 @@
           android:title="@string/var_item_search"
           android:icon="@drawable/ic_search_white_24dp"
           app:showAsAction="collapseActionView|ifRoom"
-          app:actionViewClass="android.support.v7.widget.SearchView" />
+          app:actionViewClass="android.support.v7.widget.SearchView"/>
 
     <item android:id="@+id/favorite"
           android:title="@string/var_item_favorite"

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
+import android.content.ContentProvider
+import android.content.Context
 import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import com.example.movieapplication.di.component.DaggerAppComponent
@@ -15,7 +17,13 @@ import dagger.android.*
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class MainApplication : Application(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector, HasBroadcastReceiverInjector {
+class MainApplication : Application(),
+    HasActivityInjector,
+    HasSupportFragmentInjector,
+    HasServiceInjector,
+    HasBroadcastReceiverInjector,
+    HasContentProviderInjector {
+
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
@@ -28,14 +36,22 @@ class MainApplication : Application(), HasActivityInjector, HasSupportFragmentIn
     @Inject
     lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
 
-    override fun onCreate() {
-        super.onCreate()
+    @Inject
+    lateinit var contentProviderInjector: DispatchingAndroidInjector<ContentProvider>
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
         DaggerAppComponent.builder()
-            .storageModule(StorageModule(applicationContext))
+            .storageModule(base?.let { StorageModule(it) })
             .appModule(AppModule(this))
             .netModule(NetModule(BuildConfig.URL))
             .build()
             .inject(this)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
     }
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
@@ -49,6 +65,7 @@ class MainApplication : Application(), HasActivityInjector, HasSupportFragmentIn
 
     override fun serviceInjector(): AndroidInjector<Service> = serviceInjector
 
-
     override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> = broadcastReceiverInjector
+
+    override fun contentProviderInjector(): AndroidInjector<ContentProvider> = contentProviderInjector
 }

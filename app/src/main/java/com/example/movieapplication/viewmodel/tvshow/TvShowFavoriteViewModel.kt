@@ -56,7 +56,7 @@ class TvShowFavoriteViewModel
             .subscribe(disposableObserver)
     }
 
-    fun searchTvs(name : String) {
+    fun searchTvs(name: String) {
         val disposableObserver = object : DisposableObserver<List<TvShow>>() {
             override fun onComplete() {
                 error = false

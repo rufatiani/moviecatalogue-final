@@ -3,7 +3,9 @@ package com.example.movieapplication.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.PagerAdapter
 import dagger.android.support.AndroidSupportInjection

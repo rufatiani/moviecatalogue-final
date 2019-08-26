@@ -11,5 +11,6 @@
             android:layout_height="150dp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
+            android:contentDescription="@string/content_widget"
             tools:srcCompat="@drawable/example_appwidget_preview"/>
 </LinearLayout>

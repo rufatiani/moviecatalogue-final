@@ -1,20 +1,17 @@
 package com.example.movieapplication.view.activity
 
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.example.movieapplication.R
-import com.example.movieapplication.data.repository.MovieRepository
 import com.example.movieapplication.data.service.DailyAlarmReceiver
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.utils.Preferences
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_reminder.*
-import javax.inject.Inject
 
 class ReminderActivity : AppCompatActivity() {
 
-    private lateinit var dailyAlarmReceiver : DailyAlarmReceiver
+    private lateinit var dailyAlarmReceiver: DailyAlarmReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,21 +28,21 @@ class ReminderActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dailyAlarmReceiver = DailyAlarmReceiver()
 
-            swDailyReminder.setOnCheckedChangeListener{button, checked->
+            swDailyReminder.setOnCheckedChangeListener { button, checked ->
                 Preferences.setDailyPref(this, checked)
 
                 if (checked) {
                     dailyAlarmReceiver.setDailyReminder(this)
-                }else{
+                } else {
                     dailyAlarmReceiver.cancelAlarm(this, Const.ID_DAILY_REMINDER)
                 }
             }
 
-            swReleaseReminder.setOnCheckedChangeListener{button, checked->
+            swReleaseReminder.setOnCheckedChangeListener { button, checked ->
                 Preferences.setReleasedPref(this, checked)
-                if (checked){
+                if (checked) {
                     dailyAlarmReceiver.setReleasedReminder(this)
-                }else{
+                } else {
                     dailyAlarmReceiver.cancelAlarm(this, Const.ID_RELEASED_REMINDEER)
                 }
             }
@@ -62,7 +59,7 @@ class ReminderActivity : AppCompatActivity() {
         prepareSwitch()
     }
 
-    private fun prepareSwitch(){
+    private fun prepareSwitch() {
         swDailyReminder.isChecked = Preferences.getDailyPref(this)
         swReleaseReminder.isChecked = Preferences.getReleasedPref(this)
     }

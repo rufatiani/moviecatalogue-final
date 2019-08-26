@@ -65,7 +65,7 @@ class MovieViewModel
             .subscribe(disposableObserver)
     }
 
-    fun searchMovies(query : String) {
+    fun searchMovies(query: String) {
         val disposableObserver = object : DisposableObserver<PageMovie>() {
             override fun onComplete() {
                 error = false

@@ -21,11 +21,11 @@ class MovieRepository
         return movieApiInterface.getMovies(Const.KEY_API, Preferences.getLanguage(context))
     }
 
-    fun findMovies(query : String): Observable<PageMovie> {
+    fun findMovies(query: String): Observable<PageMovie> {
         return movieApiInterface.findMovies(Const.KEY_API, Preferences.getLanguage(context), query)
     }
 
-    fun movieRelease(today : String): Observable<PageMovie> {
+    fun movieRelease(today: String): Observable<PageMovie> {
         return movieApiInterface.movieRelease(Const.KEY_API, Preferences.getLanguage(context), today, today)
     }
 
@@ -39,8 +39,8 @@ class MovieRepository
         return movieDao.queryMoviesSync()
     }
 
-    fun findMoviesFav(title : String): Observable<List<Movie>> {
-        return movieDao.findMovies("%"+title+"%")
+    fun findMoviesFav(title: String): Observable<List<Movie>> {
+        return movieDao.findMovies("%" + title + "%")
             .toObservable()
             .doOnNext {}
     }

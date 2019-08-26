@@ -56,7 +56,7 @@ class MovieFavoriteViewModel
             .subscribe(disposableObserver)
     }
 
-    fun searchMovies(title : String) {
+    fun searchMovies(title: String) {
         val disposableObserver = object : DisposableObserver<List<Movie>>() {
             override fun onComplete() {
                 error = false

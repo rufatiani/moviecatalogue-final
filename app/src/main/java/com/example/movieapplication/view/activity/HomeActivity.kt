@@ -1,14 +1,10 @@
 package com.example.movieapplication.view.activity
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.NotificationCompat
 import android.support.v4.view.ViewPager
@@ -17,20 +13,16 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.PagerBottomNavigationAdapter
-import com.example.movieapplication.data.repository.MovieRepository
 import com.example.movieapplication.data.service.DailyAlarmReceiver
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.utils.Preferences
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_reminder.*
-import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
 
     private var prevMenuItem: MenuItem? = null
-    private lateinit var dailyAlarmReceiver : DailyAlarmReceiver
-    private lateinit var builder : NotificationCompat.Builder
+    private lateinit var dailyAlarmReceiver: DailyAlarmReceiver
+    private lateinit var builder: NotificationCompat.Builder
     private var notificationManager: NotificationManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +91,7 @@ class HomeActivity : AppCompatActivity() {
             settingLanguage(Const.LANGUAGE_KEY_EN)
         } else if (item?.itemId == R.id.set_lang_bahasa) {
             settingLanguage(Const.LANGUAGE_KEY_ID)
-        } else if (item?.itemId == R.id.setting){
+        } else if (item?.itemId == R.id.setting) {
             val intent = Intent(this, ReminderActivity::class.java)
             startActivity(intent)
         }
@@ -113,8 +105,8 @@ class HomeActivity : AppCompatActivity() {
             menuItemFavorite.isVisible = false
         }
 
-        val menuItemSearch : MenuItem? = menu?.findItem(R.id.search)
-        if (menuItemSearch != null){
+        val menuItemSearch: MenuItem? = menu?.findItem(R.id.search)
+        if (menuItemSearch != null) {
             menuItemSearch.isVisible = true
         }
 
@@ -129,14 +121,14 @@ class HomeActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun prepareBroadcast(){
+    private fun prepareBroadcast() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dailyAlarmReceiver = DailyAlarmReceiver()
-            if(Preferences.getDailyPref(this)){
+            if (Preferences.getDailyPref(this)) {
                 dailyAlarmReceiver.setDailyReminder(this)
             }
 
-            if(Preferences.getReleasedPref(this)){
+            if (Preferences.getReleasedPref(this)) {
                 dailyAlarmReceiver.setReleasedReminder(this)
             }
         }

@@ -44,4 +44,8 @@
     <string name="widget_text">Favorite Movies</string>
     <string name="widget_empty">No Data Displayed</string>
 
+    <string name="content_image">Poster</string>
+    <string name="content_delete">Delete</string>
+    <string name="content_widget">Preview</string>
+
 </resources>

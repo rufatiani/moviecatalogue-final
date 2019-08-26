@@ -40,16 +40,16 @@ class MovieFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        val searchManager : SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        if (searchManager != null){
-            val searchView : SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
-            if(!searchView.isIconified){
+        val searchManager: SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchManager != null) {
+            val searchView: SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
+            if (!searchView.isIconified) {
                 searchView.isIconified = true
             }
             searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText != null && newText.isEmpty()){
+                    if (newText != null && newText.isEmpty()) {
                         pbMovie.visibility = View.VISIBLE
                         movieViewModel.loadMovies()
                         movieViewModel.moviesResult().observe(viewLifecycleOwner, movies)

@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class ServiceModule{
+abstract class ServiceModule {
     @ContributesAndroidInjector
     abstract fun contributeFavoriteWidgetService(): FavoriteWidgetService
 

@@ -39,13 +39,13 @@ class TVShowFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        val searchManager : SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        if (searchManager != null){
-            val searchView : SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
+        val searchManager: SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchManager != null) {
+            val searchView: SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
             searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText != null && newText.isEmpty()){
+                    if (newText != null && newText.isEmpty()) {
                         pbMovie.visibility = View.VISIBLE
                         tvShowViewModel.loadTVs()
                         tvShowViewModel.tvsResult().observe(viewLifecycleOwner, tvs)

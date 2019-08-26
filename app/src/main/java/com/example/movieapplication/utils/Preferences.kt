@@ -55,7 +55,7 @@ class Preferences {
 
         @JvmStatic
         fun getLanguage(context: Context): String {
-            var code: String = getLanguagePref(context)
+            val code: String = getLanguagePref(context)
             when (code) {
                 Const.LANGUAGE_KEY_EN -> return Const.URL_LANGUAGE_KEY_EN
                 Const.LANGUAGE_KEY_ID -> return Const.URL_LANGUAGE_KEY_ID

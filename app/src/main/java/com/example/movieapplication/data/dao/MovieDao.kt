@@ -14,7 +14,7 @@ interface MovieDao {
     fun queryMoviesSync(): List<Movie>
 
     @Query("SELECT * FROM movies WHERE title LIKE :title")
-    fun findMovies(title : String): Single<List<Movie>>
+    fun findMovies(title: String): Single<List<Movie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: Movie): Long

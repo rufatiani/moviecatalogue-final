@@ -3,6 +3,7 @@ package com.example.movieapplication.view.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -36,8 +37,8 @@ class FavoriteWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        if (intent?.action != null){
-            if (intent.action.equals(TOAST_ACTION)){
+        if (intent?.action != null) {
+            if (intent.action.equals(TOAST_ACTION)) {
                 val index = intent.getIntExtra(EXTRA_ITEM, 0)
                 Toast.makeText(context, "Touched view " + index, Toast.LENGTH_SHORT).show()
             }
@@ -69,7 +70,9 @@ class FavoriteWidget : AppWidgetProvider() {
             val pendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             views.setPendingIntentTemplate(R.id.svWidget, pendingIntent)
 
-            appWidgetManager.updateAppWidget(appWidgetId, views)
+            val component = ComponentName(context, FavoriteWidget::class.java)
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.svWidget)
+            appWidgetManager.updateAppWidget(component, views)
         }
     }
 }

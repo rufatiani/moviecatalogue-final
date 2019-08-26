@@ -43,4 +43,8 @@
 
     <string name="widget_text">Film Favorit</string>
     <string name="widget_empty">Tidak ada data yang ditampilkan</string>
+
+    <string name="content_image">Poster</string>
+    <string name="content_delete">Hapus</string>
+    <string name="content_widget">Preview</string>
 </resources>

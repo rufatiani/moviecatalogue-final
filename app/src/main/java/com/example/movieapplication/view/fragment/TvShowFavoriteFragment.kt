@@ -8,11 +8,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.text.TextUtils
 import android.view.*
 import android.widget.Toast
 import com.example.movieapplication.R
@@ -43,13 +41,13 @@ class TvShowFavoriteFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        val searchManager : SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        if (searchManager != null){
-            val searchView : SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
+        val searchManager: SearchManager? = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchManager != null) {
+            val searchView: SearchView = (menu?.findItem(R.id.search))?.actionView as SearchView
             searchView.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText != null && newText.isEmpty()){
+                    if (newText != null && newText.isEmpty()) {
                         pbMovieFavorite.visibility = View.VISIBLE
                         tvShowFavoriteViewModel.loadTvs()
                         tvShowFavoriteViewModel.tvsResult().observe(viewLifecycleOwner, tvs)

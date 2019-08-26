@@ -12,10 +12,11 @@ import com.example.movieapplication.data.repository.MovieRepository
 import com.example.movieapplication.data.service.task.DownloadImageTask
 import com.example.movieapplication.utils.Const
 
-class FavoriteWidgetRemoteViewsFactory(val context: Context, val movieRepository: MovieRepository) : RemoteViewsService.RemoteViewsFactory{
+class FavoriteWidgetRemoteViewsFactory(val context: Context, val movieRepository: MovieRepository) :
+    RemoteViewsService.RemoteViewsFactory {
 
-    private var items : MutableList<Bitmap> = ArrayList()
-    private var movies : List<Movie> = ArrayList()
+    private var items: MutableList<Bitmap> = ArrayList()
+    private var movies: List<Movie> = ArrayList()
 
     override fun onCreate() {
     }
@@ -63,7 +64,7 @@ class FavoriteWidgetRemoteViewsFactory(val context: Context, val movieRepository
 
     }
 
-    private fun setBitmap(list: List<Movie>){
+    private fun setBitmap(list: List<Movie>) {
         for (i in 0 until list.size) {
             items.add(DownloadImageTask().execute(Const.URL_IMAGE + Const.URL_IMAGE_SIZE + list[i].image).get())
         }

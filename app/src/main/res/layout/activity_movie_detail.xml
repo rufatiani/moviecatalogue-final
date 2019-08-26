@@ -145,7 +145,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:padding="5dp" android:layout_marginEnd="10dp"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/content_image"/>
 
             </android.support.constraint.ConstraintLayout>
 

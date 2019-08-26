@@ -9,7 +9,7 @@ import javax.inject.Inject
 class FavoriteWidgetService : RemoteViewsService() {
 
     @Inject
-    lateinit var movieRepository : MovieRepository
+    lateinit var movieRepository: MovieRepository
 
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
         AndroidInjection.inject(this);

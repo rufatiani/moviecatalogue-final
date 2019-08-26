@@ -141,8 +141,8 @@ class MovieDetailActivity : AppCompatActivity() {
             menuItemFavorite.isVisible = !isFavorite
         }
 
-        val menuItemSearch : MenuItem? = menu?.findItem(R.id.search)
-        if (menuItemSearch != null){
+        val menuItemSearch: MenuItem? = menu?.findItem(R.id.search)
+        if (menuItemSearch != null) {
             menuItemSearch.isVisible = false
         }
 
