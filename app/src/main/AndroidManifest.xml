@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <permission android:name="com.example.movieapplication.READ_DATABASE" android:protectionLevel="normal"/>
+    <permission android:name="com.example.movieapplication.WRITE_DATABASE" android:protectionLevel="normal"/>
 
     <application
             android:name=".MainApplication"
@@ -16,11 +18,10 @@
             android:theme="@style/AppTheme">
         <activity android:name=".view.activity.ReminderActivity">
         </activity>
-
         <receiver
                 android:name=".data.service.DailyAlarmReceiver"
                 android:enabled="true"
-                android:exported="true" />
+                android:exported="true"/>
 
         <receiver android:name=".view.widget.FavoriteWidget">
             <intent-filter>
@@ -31,7 +32,6 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/favorite_widget_info"/>
         </receiver>
-
         <service
                 android:name=".view.widget.FavoriteWidgetService"
                 android:permission="android.permission.BIND_REMOTEVIEWS"/>
@@ -45,6 +45,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <provider
+                android:authorities="com.example.movieapplication.movie"
+                android:name=".data.provider.MovieProvider"
+                android:exported="true"
+                android:readPermission="com.example.movieapplication.READ_DATABASE"
+                android:writePermission="com.example.movieapplication.WRITE_DATABASE"/>
+
+        <provider
+                android:authorities="com.example.movieapplication.tvshow"
+                android:name=".data.provider.TvShowProvider"
+                android:exported="true"
+                android:readPermission="com.example.movieapplication.READ_DATABASE"
+                android:writePermission="com.example.movieapplication.WRITE_DATABASE"/>
     </application>
 
 </manifest>
