@@ -21,17 +21,12 @@ import kotlinx.android.synthetic.main.activity_home.*
 class HomeActivity : AppCompatActivity() {
 
     private var prevMenuItem: MenuItem? = null
-    private lateinit var dailyAlarmReceiver: DailyAlarmReceiver
-    private lateinit var builder: NotificationCompat.Builder
-    private var notificationManager: NotificationManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_home)
         nav_view.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-
-        prepareBroadcast()
 
         val fragmentAdapter = supportFragmentManager?.let { PagerBottomNavigationAdapter(baseContext, it) }
         vpHome.adapter = fragmentAdapter
@@ -105,7 +100,7 @@ class HomeActivity : AppCompatActivity() {
             menuItemFavorite.isVisible = false
         }
 
-        val menuItemSearch: MenuItem? = menu?.findItem(R.id.search)
+        val menuItemSearch = menu?.findItem(R.id.search)
         if (menuItemSearch != null) {
             menuItemSearch.isVisible = true
         }
@@ -119,18 +114,5 @@ class HomeActivity : AppCompatActivity() {
         intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-    private fun prepareBroadcast() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            dailyAlarmReceiver = DailyAlarmReceiver()
-            if (Preferences.getDailyPref(this)) {
-                dailyAlarmReceiver.setDailyReminder(this)
-            }
-
-            if (Preferences.getReleasedPref(this)) {
-                dailyAlarmReceiver.setReleasedReminder(this)
-            }
-        }
     }
 }

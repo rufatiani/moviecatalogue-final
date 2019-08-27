@@ -1,6 +1,8 @@
 package com.example.movieapplication.view.activity
 
+import android.appwidget.AppWidgetManager
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -14,12 +16,14 @@ import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.data.model.TvShow
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.utils.Preferences
+import com.example.movieapplication.view.widget.FavoriteWidget
 import com.example.movieapplication.viewmodel.movie.MovieFavoriteViewModel
 import com.example.movieapplication.viewmodel.movie.MovieFavoriteViewModelFactory
 import com.example.movieapplication.viewmodel.tvshow.TvShowFavoriteViewModel
 import com.example.movieapplication.viewmodel.tvshow.TvShowFavoriteViewModelFactory
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_movie_detail.*
+import kotlinx.android.synthetic.main.favorite_widget.*
 import javax.inject.Inject
 
 class MovieDetailActivity : AppCompatActivity() {
@@ -121,6 +125,11 @@ class MovieDetailActivity : AppCompatActivity() {
                 movie?.let { it -> movieFavoriteViewModel.saveMovie(it) }
 
                 if (!movieFavoriteViewModel.isError()) {
+                    val appWidgetManager = AppWidgetManager.getInstance(this)
+                    val component = ComponentName(this, FavoriteWidget::class.java)
+                    val appWidgetId = appWidgetManager.getAppWidgetIds(component)
+                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.svWidget)
+
                     Toast.makeText(baseContext, resources.getString(R.string.msg_favorite), Toast.LENGTH_SHORT).show()
                 }
             } else if (tv != null) {

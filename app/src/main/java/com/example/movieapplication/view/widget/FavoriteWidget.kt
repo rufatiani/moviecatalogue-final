@@ -17,7 +17,6 @@ import com.example.movieapplication.R
 class FavoriteWidget : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(
                 context,
@@ -28,11 +27,9 @@ class FavoriteWidget : AppWidgetProvider() {
     }
 
     override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
     }
 
     override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -70,9 +67,7 @@ class FavoriteWidget : AppWidgetProvider() {
             val pendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             views.setPendingIntentTemplate(R.id.svWidget, pendingIntent)
 
-            val component = ComponentName(context, FavoriteWidget::class.java)
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.svWidget)
-            appWidgetManager.updateAppWidget(component, views)
+            appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
 }

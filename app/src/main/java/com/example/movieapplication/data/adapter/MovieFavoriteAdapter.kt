@@ -1,26 +1,30 @@
 package com.example.movieapplication.data.adapter
 
 import android.app.AlertDialog
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Bitmap
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.movieapplication.R
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.utils.Preferences
 import com.example.movieapplication.view.activity.MovieDetailActivity
+import com.example.movieapplication.view.widget.FavoriteWidget
 import com.example.movieapplication.viewmodel.movie.MovieFavoriteViewModel
 
 class MovieFavoriteAdapter(
-    private var movies: List<Movie>,
-    private var bitmaps: List<Bitmap>,
-    private val viewModel: MovieFavoriteViewModel,
-    private val builder: AlertDialog.Builder
+    private var movies: ArrayList<Movie>,
+    private var bitmaps: ArrayList<Bitmap>,
+    private val viewModel: MovieFavoriteViewModel
 ) :
 
     RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteViewHolder>() {
@@ -41,9 +45,20 @@ class MovieFavoriteAdapter(
         holder.tvDesc.text = movies[position].overview
         holder.ivIcon.setImageBitmap(bitmaps[position])
 
+        val builder = AlertDialog.Builder(holder.itemView.context)
+        builder.setTitle(holder.itemView.resources.getString(R.string.var_msg_title))
+        builder.setMessage(holder.itemView.resources.getString(R.string.var_msg))
+
         builder.setPositiveButton(android.R.string.yes) { dialog, which ->
             viewModel.deleteMovie(movies[position])
-            notifyDataSetChanged()
+
+            val appWidgetManager = AppWidgetManager.getInstance(holder.itemView.context)
+            val component = ComponentName(holder.itemView.context, FavoriteWidget::class.java)
+            val appWidgetId = appWidgetManager.getAppWidgetIds(component)
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.svWidget)
+
+            val intent = Intent("refresh-movie")
+            LocalBroadcastManager.getInstance(holder.itemView.context).sendBroadcast(intent)
         }
 
         builder.setNegativeButton(android.R.string.no) { dialog, which ->

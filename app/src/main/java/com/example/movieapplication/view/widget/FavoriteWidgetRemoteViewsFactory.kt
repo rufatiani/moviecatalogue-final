@@ -65,6 +65,9 @@ class FavoriteWidgetRemoteViewsFactory(val context: Context, val movieRepository
     }
 
     private fun setBitmap(list: List<Movie>) {
+        items.removeAll(items)
+        items.clear()
+
         for (i in 0 until list.size) {
             items.add(DownloadImageTask().execute(Const.URL_IMAGE + Const.URL_IMAGE_SIZE + list[i].image).get())
         }
