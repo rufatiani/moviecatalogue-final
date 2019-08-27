@@ -23,7 +23,6 @@ import com.example.movieapplication.viewmodel.tvshow.TvShowFavoriteViewModel
 import com.example.movieapplication.viewmodel.tvshow.TvShowFavoriteViewModelFactory
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_movie_detail.*
-import kotlinx.android.synthetic.main.favorite_widget.*
 import javax.inject.Inject
 
 class MovieDetailActivity : AppCompatActivity() {

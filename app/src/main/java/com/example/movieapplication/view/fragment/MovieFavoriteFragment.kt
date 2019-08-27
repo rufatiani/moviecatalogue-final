@@ -1,21 +1,22 @@
 package com.example.movieapplication.view.fragment
 
-import android.app.AlertDialog
-import android.app.SearchManager
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.MovieFavoriteAdapter
 import com.example.movieapplication.data.model.Movie
 import com.example.movieapplication.utils.Const
@@ -24,8 +25,6 @@ import com.example.movieapplication.viewmodel.movie.MovieFavoriteViewModelFactor
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_movie_favorite.*
 import javax.inject.Inject
-import android.content.IntentFilter
-import com.example.movieapplication.R
 
 
 class MovieFavoriteFragment : Fragment() {
@@ -63,8 +62,10 @@ class MovieFavoriteFragment : Fragment() {
         }
 
         activity?.baseContext?.let {
-            LocalBroadcastManager.getInstance(it).registerReceiver(receiver,
-                IntentFilter("refresh-movie"))
+            LocalBroadcastManager.getInstance(it).registerReceiver(
+                receiver,
+                IntentFilter("refresh-movie")
+            )
         }
     }
 

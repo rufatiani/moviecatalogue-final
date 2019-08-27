@@ -1,7 +1,5 @@
 package com.example.movieapplication.view.fragment
 
-import android.app.AlertDialog
-import android.app.SearchManager
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.BroadcastReceiver
@@ -14,8 +12,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.TvShowFavoriteAdapter
@@ -62,7 +61,8 @@ class TvShowFavoriteFragment : Fragment() {
         }
 
         activity?.baseContext?.let {
-            LocalBroadcastManager.getInstance(it).registerReceiver(receiver,
+            LocalBroadcastManager.getInstance(it).registerReceiver(
+                receiver,
                 IntentFilter("refresh-tv")
             )
         }

@@ -1,19 +1,15 @@
 package com.example.movieapplication.view.activity
 
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.NotificationCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.example.movieapplication.R
 import com.example.movieapplication.data.adapter.PagerBottomNavigationAdapter
-import com.example.movieapplication.data.service.DailyAlarmReceiver
 import com.example.movieapplication.utils.Const
 import com.example.movieapplication.utils.Preferences
 import kotlinx.android.synthetic.main.activity_home.*
