@@ -69,6 +69,22 @@ class MovieFragment : Fragment(), LoadMovieCallback {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        val handlerThread = HandlerThread("DataObserver")
+        handlerThread.start()
+
+        val handler = Handler(handlerThread.looper)
+        val dataObserver = context?.let {
+            DataObserver(
+                handler,
+                it
+            )
+        }
+        activity?.contentResolver?.registerContentObserver(CONTENT_URI, true, dataObserver)
+        context?.let { LoadMovieTask(it, this).execute() }
+    }
+
     private fun initializeRecycler() {
         val gridLayoutManager = GridLayoutManager(activity, 1)
         gridLayoutManager.orientation = RecyclerView.VERTICAL
@@ -103,7 +119,7 @@ class MovieFragment : Fragment(), LoadMovieCallback {
         adapter = MovieAdapter(movies, bitmaps)
         rlMoviesFavorite.adapter = adapter
 
-        pbMovieFavorite.visibility = View.VISIBLE
+        pbMovieFavorite.visibility = View.GONE
     }
 
     private class LoadMovieTask(context: Context, callback: LoadMovieCallback) : AsyncTask<Void, Void, Cursor?>() {
