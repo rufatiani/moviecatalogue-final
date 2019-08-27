@@ -17,7 +17,13 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_favorite, container, false)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        super.onPrepareOptionsMenu(menu)
+        menu?.findItem(R.id.search)?.isVisible = false
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

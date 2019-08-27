@@ -100,9 +100,9 @@ class HomeActivity : AppCompatActivity() {
             menuItemFavorite.isVisible = false
         }
 
-        val menuItemSearch = menu?.findItem(R.id.search)
-        if (menuItemSearch != null) {
-            menuItemSearch.isVisible = true
+        val searchItemFavorite = menu?.findItem(R.id.search)
+        if (searchItemFavorite != null) {
+            searchItemFavorite.isVisible = true
         }
 
         return super.onPrepareOptionsMenu(menu)
